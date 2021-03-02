@@ -1,0 +1,13 @@
+<div id="products">
+  <basket-preview></basket-preview>
+
+  <product-list [products]="products" [type]="'ADD'"></product-list>
+
+  <app-button
+    class="btn secondary checkout"
+    routerLink="/basket"
+    routerLinkActive="active"
+    [text]="'Proceed to checkout'"
+  >
+  </app-button>
+</div>

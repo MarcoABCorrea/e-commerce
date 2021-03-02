@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   BasketCheckoutComponent,
   CheckoutResponseComponent,
-  ProductListComponent,
+  ProductsComponent,
 } from './pages';
 
 const routes: Routes = [
-  { path: '', component: ProductListComponent },
+  { path: '', component: ProductsComponent },
   { path: 'basket', component: BasketCheckoutComponent },
   { path: 'response', component: CheckoutResponseComponent },
   { path: '**', redirectTo: '' },

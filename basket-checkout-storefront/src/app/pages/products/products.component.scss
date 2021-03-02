@@ -1,0 +1,14 @@
+#products {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  product-list {
+    flex-grow: 1;
+  }
+
+  basket-preview,
+  app-button.checkout {
+    margin-left: auto;
+  }
+}

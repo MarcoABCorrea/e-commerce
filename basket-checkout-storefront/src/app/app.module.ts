@@ -10,7 +10,7 @@ import { CoreModule } from './core/core.module';
 import {
   BasketCheckoutComponent,
   CheckoutResponseComponent,
-  ProductListComponent,
+  ProductsComponent,
 } from './pages';
 import { SharedModule } from './shared/shared.module';
 
@@ -19,7 +19,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     BasketCheckoutComponent,
     CheckoutResponseComponent,
-    ProductListComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +34,7 @@ import { SharedModule } from './shared/shared.module';
   exports: [
     BasketCheckoutComponent,
     CheckoutResponseComponent,
-    ProductListComponent,
+    ProductsComponent,
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent],

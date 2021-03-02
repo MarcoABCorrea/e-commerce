@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Product } from 'src/app/core/models';
+import { BasketService } from 'src/app/services/basket.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
-import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-basket-checkout',
@@ -17,24 +16,24 @@ export class BasketCheckoutComponent implements OnInit {
   creditCard: string = '4539456463019519'; // TODO fix this
 
   constructor(
-    private sharedDataService: SharedDataService,
+    private basketService: BasketService,
     private router: Router,
     private checkoutService: CheckoutService
   ) {}
 
   ngOnInit(): void {
-    this.basket = this.sharedDataService.basketItems;
+    this.loadBasket();
   }
 
-  removeFromBasket(product: Product): void {
-    this.basket = this.sharedDataService.removeFromBasket(product);
+  loadBasket(): void {
+    this.basket = this.basketService.products;
   }
 
   checkout(): void {
-    console.log('checkout', this.creditCard);
-    let basket = this.sharedDataService.getBasket();
-    this.checkoutService.checkout(basket).subscribe((response) => {
-      this.router.navigate(['response'], { queryParams: response });
-    });
+    let basket = this.basketService.getBasketItems();
+    console.log('checkout', basket);
+    // this.checkoutService.checkout(basket).subscribe((response) => {
+    //   this.router.navigate(['response'], { queryParams: response });
+    // });
   }
 }

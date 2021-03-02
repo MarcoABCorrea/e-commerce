@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'basket-preview',
@@ -6,9 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./basket-preview.component.scss'],
 })
 export class BasketPreviewComponent implements OnInit {
-  @Input() quantity: number;
+  basketLength$: Observable<number>;
 
-  constructor() {}
+  constructor(private basketService: BasketService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.basketLength$ = this.basketService.currentLength();
+  }
 }

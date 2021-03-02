@@ -4,5 +4,5 @@
   routerLink="/basket"
   routerLinkActive="active"
 >
-  <label sufix class="item-count">{{ quantity }}</label>
+  <label sufix class="item-count">{{ basketLength$ | async }}</label>
 </app-button>

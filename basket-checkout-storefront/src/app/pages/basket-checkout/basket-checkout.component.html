@@ -8,23 +8,10 @@
     >
     </app-button>
 
-    <basket-preview [quantity]="basket.length"></basket-preview>
+    <basket-preview></basket-preview>
   </div>
 
-  <ul class="product-list">
-    <li class="product-item" *ngFor="let product of basket">
-      <label class="name">{{ product.name }}</label>
-      <label class="quantity">{{ product.quantity }}</label>
-      <label class="price">{{ product.price }}</label>
-      <app-button
-        class="btn primary remove"
-        [text]="'Remove'"
-        (click)="removeFromBasket(product)"
-      >
-        >
-      </app-button>
-    </li>
-  </ul>
+  <product-list [products]="basket" [type]="'REMOVE'"></product-list>
 
   <div class="pricing">
     <div class="sub-total-container">
@@ -50,7 +37,5 @@
     class="btn primary checkout"
     [text]="'Checkout'"
     (click)="checkout()"
-  >
-    >
-  </app-button>
+  ></app-button>
 </div>

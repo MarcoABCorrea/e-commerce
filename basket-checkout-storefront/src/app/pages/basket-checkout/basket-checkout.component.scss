@@ -3,33 +3,31 @@
   flex-direction: column;
   width: 100%;
 
-  ul.product-list {
-    list-style: none;
-    margin-top: 4rem;
-
-    li.product-item {
-      display: flex;
-      margin-bottom: 2rem;
-
-      & * {
-        margin: auto;
-      }
-    }
-  }
-
   basket-preview {
     float: right;
   }
 
-  app-button.checkout {
-    margin-left: auto;
+  product-list {
+    flex-grow: 1;
   }
 
-  div.credit-card,
   div.pricing {
-    display: flex;
     flex-direction: column;
     align-items: flex-end;
+  }
+
+  div.credit-card {
+    flex-direction: row;
+    align-self: flex-end;
+
+    input {
+      margin-left: 1rem;
+    }
+  }
+
+  div.pricing,
+  div.credit-card {
+    display: flex;
     margin-bottom: 2rem;
 
     span {
@@ -39,5 +37,9 @@
     label {
       margin-left: 1rem;
     }
+  }
+
+  app-button.checkout {
+    margin-left: auto;
   }
 }
