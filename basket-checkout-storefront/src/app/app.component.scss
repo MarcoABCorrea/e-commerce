@@ -1,0 +1,13 @@
+#shopping-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: auto;
+}
+
+:host ::ng-deep router-outlet + * {
+  display: flex;
+  flex-grow: 1;
+  margin-top: 3rem;
+  padding: 2rem;
+}

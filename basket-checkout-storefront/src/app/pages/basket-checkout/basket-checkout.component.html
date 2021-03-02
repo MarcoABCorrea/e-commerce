@@ -1,0 +1,56 @@
+<div id="basket-checkout">
+  <div class="actions">
+    <app-button
+      class="btn secondary continue"
+      routerLink="/"
+      routerLinkActive="active"
+      [text]="'Continue Shopping'"
+    >
+    </app-button>
+
+    <basket-preview [quantity]="basket.length"></basket-preview>
+  </div>
+
+  <ul class="product-list">
+    <li class="product-item" *ngFor="let product of basket">
+      <label class="name">{{ product.name }}</label>
+      <label class="quantity">{{ product.quantity }}</label>
+      <label class="price">{{ product.price }}</label>
+      <app-button
+        class="btn primary remove"
+        [text]="'Remove'"
+        (click)="removeFromBasket(product)"
+      >
+        >
+      </app-button>
+    </li>
+  </ul>
+
+  <div class="pricing">
+    <div class="sub-total-container">
+      <span class="sub-total">Sub Total</span>
+      <label class="value">{{ subTotal }}</label>
+    </div>
+    <div class="promotional-container">
+      <span class="promotional">Promotional discount amount</span>
+      <label class="value">{{ discont }}</label>
+    </div>
+    <div class="basket-container">
+      <span class="basket-total">Basket total</span>
+      <label class="value">{{ basketTotal }}</label>
+    </div>
+  </div>
+
+  <div class="credit-card">
+    <span>Please enter your credit card number</span>
+    <input type="text" [(ngModel)]="creditCard" />
+  </div>
+
+  <app-button
+    class="btn primary checkout"
+    [text]="'Checkout'"
+    (click)="checkout()"
+  >
+    >
+  </app-button>
+</div>
