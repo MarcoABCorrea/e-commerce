@@ -1,10 +1,11 @@
 <ul id="product-list">
   <li class="product-item" *ngFor="let product of products">
     <label class="name">{{ product.name }}</label>
+
     <select
       *ngIf="isRemove()"
       [ngModel]="product.quantity"
-      (change)="changeQuantity($event.target.value, product)"
+      (change)="changeQuantity(+$event.target.value, product)"
     >
       <option
         [selected]="quantity === product.quantity"
