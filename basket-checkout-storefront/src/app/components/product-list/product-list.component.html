@@ -1,7 +1,19 @@
 <ul id="product-list">
   <li class="product-item" *ngFor="let product of products">
     <label class="name">{{ product.name }}</label>
-    <label class="quantity" *ngIf="isRemove()">{{ product.quantity }}</label>
+    <select
+      *ngIf="isRemove()"
+      [ngModel]="product.quantity"
+      (change)="changeQuantity($event.target.value, product)"
+    >
+      <option
+        [selected]="quantity === product.quantity"
+        *ngFor="let quantity of quantities"
+      >
+        {{ quantity }}
+      </option>
+    </select>
+
     <label class="price">{{ getPrice(product) }}</label>
     <app-button
       class="btn primary"

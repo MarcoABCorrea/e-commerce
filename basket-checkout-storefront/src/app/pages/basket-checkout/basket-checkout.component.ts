@@ -26,6 +26,7 @@ export class BasketCheckoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.loadPromoCode();
     this.loadProducts();
     this.calcPrices();
   }
@@ -34,6 +35,11 @@ export class BasketCheckoutComponent implements OnInit, OnDestroy {
     if (this.subscriptions.length > 0) {
       this.subscriptions.map((sub) => sub.unsubscribe());
     }
+  }
+
+  loadPromoCode(): void {
+    this.promoCode = this.productService.currentPromoCode.code;
+    this.discont = this.productService.currentPromoCode.discount;
   }
 
   loadProducts(): void {
@@ -54,6 +60,10 @@ export class BasketCheckoutComponent implements OnInit, OnDestroy {
     const sub = this.productService.applyPromoCode(this.promoCode).subscribe({
       next: (promo) => {
         this.discont = promo.amount;
+        this.productService.currentPromoCode = {
+          discount: promo.amount,
+          code: this.promoCode,
+        };
         this.calcPrices();
       },
       error: () =>
@@ -63,18 +73,26 @@ export class BasketCheckoutComponent implements OnInit, OnDestroy {
   }
 
   checkout(): void {
-    //TODO validate card
-    const basket = this.basketService.getBasketItems();
-    const checkoutData: Basket = {
-      basket,
-      cardNumber: this.cardNumber?.toString(),
-    };
-    const sub = this.checkoutService.checkout(checkoutData).subscribe({
-      next: (res) => this.redirect(res),
-      error: (res) => this.redirect(res.error),
-    });
+    const cardNumber = this.cardNumber?.toString();
+    const isCreditCardValid = this.checkoutService.isCreditCardValid(
+      cardNumber
+    );
 
-    this.subscriptions.push(sub);
+    if (isCreditCardValid && this.products.length > 0) {
+      const basket = this.basketService.getBasketItems();
+      const checkoutData: Basket = {
+        basket,
+        cardNumber,
+      };
+
+      this.productService.resetPromo();
+      const sub = this.checkoutService.checkout(checkoutData).subscribe({
+        next: (res) => this.redirect(res),
+        error: (res) => this.redirect(res.error),
+      });
+
+      this.subscriptions.push(sub);
+    }
   }
 
   redirect(res: CheckoutResponse): void {

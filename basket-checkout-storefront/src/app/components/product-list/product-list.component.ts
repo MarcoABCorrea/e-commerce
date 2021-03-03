@@ -12,6 +12,7 @@ export class ProductListComponent implements OnInit {
   @Input() products: Array<Product>;
   @Output() productsChanged = new EventEmitter();
   actionText: string;
+  quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(private basketService: BasketService) {}
 
@@ -19,12 +20,14 @@ export class ProductListComponent implements OnInit {
     this.actionText = this.isRemove() ? 'Remove' : 'Add to basket';
   }
 
-  getPrice(product: Product): number {
-    if (this.isRemove()) {
-      return product.price * product.quantity;
-    } else {
-      return product.price;
-    }
+  changeQuantity(newQuantity: number, product: Product) {
+    this.basketService.changeProductQuantity(newQuantity, product);
+    this.productsChanged.emit();
+  }
+
+  getPrice({ price, quantity }: Product): string {
+    let priceVal = this.isRemove() ? price * quantity : price;
+    return priceVal.toFixed(2);
   }
 
   isRemove(): boolean {

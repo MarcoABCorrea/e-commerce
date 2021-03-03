@@ -15,15 +15,25 @@ export class BasketService {
     return this._basketLength.asObservable();
   }
 
-  addBasketLength(): void {
-    let current = this._basketLength.getValue();
-    current++;
+  addBasketLength(quantity: number): void {
+    let current = this._basketLength.getValue() + quantity;
     this._basketLength.next(current);
   }
 
   removeBasketLength(quantity: number): void {
     let current = this._basketLength.getValue() - quantity;
     this._basketLength.next(current);
+  }
+
+  changeProductQuantity(newQuantity: number, product: Product): void {
+    let prod = this._products.find(({ sku }) => sku === product.sku);
+    if (product.quantity > newQuantity) {
+      this.removeBasketLength(product.quantity - newQuantity);
+    } else {
+      this.addBasketLength(newQuantity - product.quantity);
+    }
+    const index = this._products.indexOf(prod);
+    this._products[index].quantity = newQuantity;
   }
 
   addProduct(product: Product): Array<Product> {
@@ -41,7 +51,7 @@ export class BasketService {
       this._products.push(product);
     }
 
-    this.addBasketLength();
+    this.addBasketLength(1);
     return this.products;
   }
 
