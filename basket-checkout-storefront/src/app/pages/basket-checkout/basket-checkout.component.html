@@ -11,26 +11,40 @@
     <basket-preview></basket-preview>
   </div>
 
-  <product-list [products]="basket" [type]="'REMOVE'"></product-list>
+  <product-list
+    [products]="products"
+    [type]="'REMOVE'"
+    (productsChanged)="calcPrices()"
+  ></product-list>
+
+  <div class="promo">
+    <label class="promo">Enter promo code</label>
+    <input type="text" [(ngModel)]="promoCode" />
+    <app-button
+      class="btn primary apply"
+      [text]="'Apply'"
+      (click)="applyPromo()"
+    ></app-button>
+  </div>
 
   <div class="pricing">
     <div class="sub-total-container">
-      <span class="sub-total">Sub Total</span>
-      <label class="value">{{ subTotal }}</label>
+      <label class="sub-total">Sub Total</label>
+      <span class="value">{{ subTotal.toFixed(2) }}</span>
     </div>
     <div class="promotional-container">
-      <span class="promotional">Promotional discount amount</span>
-      <label class="value">{{ discont }}</label>
+      <label class="promotional">Promotional discount amount</label>
+      <span class="value">{{ discont }}%</span>
     </div>
     <div class="basket-container">
-      <span class="basket-total">Basket total</span>
-      <label class="value">{{ basketTotal }}</label>
+      <label class="basket-total">Basket total</label>
+      <span class="value">{{ basketTotal.toFixed(2) }}</span>
     </div>
   </div>
 
   <div class="credit-card">
-    <span>Please enter your credit card number</span>
-    <input type="text" [(ngModel)]="creditCard" />
+    <label>Please enter your credit card number</label>
+    <input type="number" [(ngModel)]="cardNumber" />
   </div>
 
   <app-button

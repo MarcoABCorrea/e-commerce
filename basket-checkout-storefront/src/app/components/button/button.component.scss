@@ -1,8 +1,10 @@
 .btn {
   color: white;
-  padding: 10px 24px;
+  padding: 0.5rem 1rem;
   text-decoration: none;
   cursor: pointer;
+  box-shadow: 0.3rem 0.3rem 2px 1px rgb(0 0 255 / 20%);
+  outline: none;
 }
 
 .primary {
@@ -13,4 +15,9 @@
 .secondary {
   background-color: #71058b;
   border: 1px solid #71058b;
+}
+
+.primary:hover,
+.secondary:hover {
+  filter: brightness(150%);
 }

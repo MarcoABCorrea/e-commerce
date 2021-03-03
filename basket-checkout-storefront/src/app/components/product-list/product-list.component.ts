@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActionType, Product } from '@models';
 import { BasketService } from 'src/app/services/basket.service';
 
@@ -10,6 +10,7 @@ import { BasketService } from 'src/app/services/basket.service';
 export class ProductListComponent implements OnInit {
   @Input() type: ActionType;
   @Input() products: Array<Product>;
+  @Output() productsChanged = new EventEmitter();
   actionText: string;
 
   constructor(private basketService: BasketService) {}
@@ -28,5 +29,6 @@ export class ProductListComponent implements OnInit {
     } else {
       this.basketService.addProduct(product);
     }
+    this.productsChanged.emit();
   }
 }

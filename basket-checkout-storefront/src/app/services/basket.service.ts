@@ -58,4 +58,9 @@ export class BasketService {
   get products(): Array<Product> {
     return this._products;
   }
+
+  resetBasket(): void {
+    this._products = [];
+    this._basketLength.next(0);
+  }
 }

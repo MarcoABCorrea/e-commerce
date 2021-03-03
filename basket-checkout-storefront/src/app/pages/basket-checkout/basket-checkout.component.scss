@@ -11,30 +11,63 @@
     flex-grow: 1;
   }
 
+  div.promo {
+    align-items: center;
+
+    app-button {
+      margin-left: 1rem;
+    }
+  }
+
   div.pricing {
     flex-direction: column;
     align-items: flex-end;
+
+    & > * {
+      display: flex;
+      width: 100%;
+      margin-top: 0.5rem;
+
+      label {
+        width: 55%;
+        text-align: end;
+      }
+    }
   }
 
   div.credit-card {
     flex-direction: row;
     align-self: flex-end;
 
-    input {
-      margin-left: 1rem;
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
     }
   }
 
+  div.promo,
   div.pricing,
   div.credit-card {
     display: flex;
-    margin-bottom: 2rem;
-
-    span {
-      color: #2727f9;
-    }
+    margin-bottom: 1rem;
 
     label {
+      color: #2727f9;
+      font-size: large;
+    }
+
+    span {
+      font-size: large;
+      font-weight: 500;
+    }
+
+    input,
+    span {
       margin-left: 1rem;
     }
   }
