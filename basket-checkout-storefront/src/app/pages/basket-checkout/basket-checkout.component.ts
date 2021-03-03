@@ -1,31 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Basket, CheckoutResponse } from '@models';
-import { BasketService } from 'src/app/services/basket.service';
-import { CheckoutService } from 'src/app/services/checkout.service';
+import { BasketService, CheckoutService, ProductService } from '@services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-basket-checkout',
   templateUrl: './basket-checkout.component.html',
   styleUrls: ['./basket-checkout.component.scss'],
 })
-export class BasketCheckoutComponent implements OnInit {
+export class BasketCheckoutComponent implements OnInit, OnDestroy {
   products: Array<any> = [];
+  promoCode: string;
   subTotal: number;
   discont: number = 0;
   basketTotal: number = 0;
-  promoCode: string;
   cardNumber: string;
+  subscriptions: Array<Subscription> = [];
 
   constructor(
-    private basketService: BasketService,
     private router: Router,
-    private checkoutService: CheckoutService
+    private basketService: BasketService,
+    private checkoutService: CheckoutService,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
     this.loadProducts();
     this.calcPrices();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscriptions.length > 0) {
+      this.subscriptions.map((sub) => sub.unsubscribe());
+    }
   }
 
   loadProducts(): void {
@@ -43,19 +51,30 @@ export class BasketCheckoutComponent implements OnInit {
   }
 
   applyPromo(): void {
-    console.log('validate promo');
+    const sub = this.productService.applyPromoCode(this.promoCode).subscribe({
+      next: (promo) => {
+        this.discont = promo.amount;
+        this.calcPrices();
+      },
+      error: () =>
+        console.error('An error occurred while applying promo code!'),
+    });
+    this.subscriptions.push(sub);
   }
 
   checkout(): void {
+    //TODO validate card
     const basket = this.basketService.getBasketItems();
     const checkoutData: Basket = {
       basket,
       cardNumber: this.cardNumber?.toString(),
     };
-    this.checkoutService.checkout(checkoutData).subscribe({
+    const sub = this.checkoutService.checkout(checkoutData).subscribe({
       next: (res) => this.redirect(res),
       error: (res) => this.redirect(res.error),
     });
+
+    this.subscriptions.push(sub);
   }
 
   redirect(res: CheckoutResponse): void {

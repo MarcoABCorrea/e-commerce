@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '@models';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from '@services';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'products',
@@ -10,15 +11,9 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductsComponent implements OnInit {
   constructor(private productService: ProductService) {}
 
-  products: Array<Product> = [];
+  products$: Observable<Array<Product>>;
 
   ngOnInit(): void {
-    this.loadProducts();
-  }
-
-  loadProducts(): void {
-    this.productService
-      .getAllProducts()
-      .subscribe((response) => (this.products = response));
+    this.products$ = this.productService.getAllProducts();
   }
 }

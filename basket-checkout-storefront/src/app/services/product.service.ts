@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product } from '@models';
+import { Product, PromoResponse } from '@models';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class ProductService {
   private basePath: string = environment.BASE_URL;
   private productsPath: string = this.basePath + 'products';
-  private promocodePath: string = this.basePath + 'promocode';
+  private promoCodePath: string = this.basePath + 'promocode';
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class ProductService {
     return this.http.get<Array<Product>>(this.productsPath);
   }
 
-  public promocode(code: any): Observable<any> {
-    return this.http.post<any>(this.promocodePath, code);
+  public applyPromoCode(promoCode: string): Observable<PromoResponse> {
+    return this.http.post<PromoResponse>(this.promoCodePath, { promoCode });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BasketService } from '@services';
 import { Observable } from 'rxjs';
-import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
   selector: 'basket-preview',

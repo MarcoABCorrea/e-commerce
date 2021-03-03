@@ -2,7 +2,7 @@
   <li class="product-item" *ngFor="let product of products">
     <label class="name">{{ product.name }}</label>
     <label class="quantity" *ngIf="isRemove()">{{ product.quantity }}</label>
-    <label class="price">{{ product.price }}</label>
+    <label class="price">{{ getPrice(product) }}</label>
     <app-button
       class="btn primary"
       [text]="actionText"

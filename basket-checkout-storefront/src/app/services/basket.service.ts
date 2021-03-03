@@ -27,7 +27,11 @@ export class BasketService {
   }
 
   addProduct(product: Product): Array<Product> {
-    let prod = this._products.find((p) => p.sku === product.sku);
+    let prod = this._products.find(({ sku }) => sku === product.sku);
+
+    if (prod && prod.quantity === 10) {
+      return this.products;
+    }
 
     if (prod) {
       let index = this._products.indexOf(prod);
@@ -38,15 +42,15 @@ export class BasketService {
     }
 
     this.addBasketLength();
-    return this._products;
+    return this.products;
   }
 
   removeProduct(product: Product): Array<Product> {
-    let prod = this._products.find((p) => p.sku === product.sku);
+    let prod = this._products.find(({ sku }) => sku === product.sku);
     let index = this._products.indexOf(prod);
     this._products.splice(index, 1);
     this.removeBasketLength(prod.quantity);
-    return this._products;
+    return this.products;
   }
 
   getBasketItems(): Array<BasketItem> {

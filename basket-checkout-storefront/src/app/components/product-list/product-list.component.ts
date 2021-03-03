@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActionType, Product } from '@models';
-import { BasketService } from 'src/app/services/basket.service';
+import { BasketService } from '@services';
 
 @Component({
   selector: 'product-list',
@@ -17,6 +17,14 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.actionText = this.isRemove() ? 'Remove' : 'Add to basket';
+  }
+
+  getPrice(product: Product): number {
+    if (this.isRemove()) {
+      return product.price * product.quantity;
+    } else {
+      return product.price;
+    }
   }
 
   isRemove(): boolean {

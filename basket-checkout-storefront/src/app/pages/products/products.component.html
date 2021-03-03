@@ -1,7 +1,7 @@
 <div id="products">
   <basket-preview></basket-preview>
 
-  <product-list [products]="products" [type]="'ADD'"></product-list>
+  <product-list [products]="products$ | async" [type]="'ADD'"></product-list>
 
   <app-button
     class="btn secondary checkout"

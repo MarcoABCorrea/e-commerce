@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckoutResponse } from '@models';
-import { BasketService } from 'src/app/services/basket.service';
+import { BasketService } from '@services';
 
 @Component({
   selector: 'app-checkout-response',
