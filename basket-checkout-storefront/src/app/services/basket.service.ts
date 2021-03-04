@@ -16,35 +16,34 @@ export class BasketService {
   }
 
   addBasketLength(quantity: number): void {
-    let current = this._basketLength.getValue() + quantity;
+    const current = this._basketLength.getValue() + quantity;
     this._basketLength.next(current);
   }
 
   removeBasketLength(quantity: number): void {
-    let current = this._basketLength.getValue() - quantity;
+    const current = this._basketLength.getValue() - quantity;
     this._basketLength.next(current);
   }
 
   changeProductQuantity(newQuantity: number, product: Product): void {
-    let prod = this._products.find(({ sku }) => sku === product.sku);
     if (product.quantity > newQuantity) {
       this.removeBasketLength(product.quantity - newQuantity);
     } else {
       this.addBasketLength(newQuantity - product.quantity);
     }
-    const index = this._products.indexOf(prod);
+    const index = this.findProductIndex(product);
     this._products[index].quantity = newQuantity;
   }
 
   addProduct(product: Product): Array<Product> {
-    let prod = this._products.find(({ sku }) => sku === product.sku);
+    const index = this.findProductIndex(product);
+    const prod = this.products[index];
 
     if (prod && prod.quantity === 10) {
       return this.products;
     }
 
     if (prod) {
-      let index = this._products.indexOf(prod);
       this._products[index].quantity++;
     } else {
       product.quantity = 1;
@@ -56,11 +55,15 @@ export class BasketService {
   }
 
   removeProduct(product: Product): Array<Product> {
-    let prod = this._products.find(({ sku }) => sku === product.sku);
-    let index = this._products.indexOf(prod);
+    const index = this.findProductIndex(product);
+    const { quantity } = this.products[index];
     this._products.splice(index, 1);
-    this.removeBasketLength(prod.quantity);
+    this.removeBasketLength(quantity);
     return this.products;
+  }
+
+  findProductIndex(product: Product): number {
+    return this._products.findIndex(({ sku }) => sku === product.sku);
   }
 
   getBasketItems(): Array<BasketItem> {
