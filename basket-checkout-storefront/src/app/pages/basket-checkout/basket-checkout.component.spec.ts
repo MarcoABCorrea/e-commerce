@@ -49,4 +49,14 @@ describe('BasketCheckoutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load promotion, products and calc discount onInit', () => {
+    spyOn(component, 'loadPromoCode').and.callThrough();
+    spyOn(component, 'loadProducts').and.callThrough();
+    spyOn(component, 'calcPrices').and.callThrough();
+    component.ngOnInit();
+    expect(component.loadPromoCode).toHaveBeenCalled();
+    expect(component.loadProducts).toHaveBeenCalled();
+    expect(component.calcPrices).toHaveBeenCalled();
+  });
 });

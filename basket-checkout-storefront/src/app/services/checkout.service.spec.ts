@@ -3,6 +3,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { Basket } from '../core/models/basket.model';
 import { CheckoutService } from './checkout.service';
 
 describe('CheckoutService', () => {
@@ -23,6 +24,17 @@ describe('CheckoutService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  describe('#checkout()', () => {
+    it('should "POST" call "checkout" endpoint', () => {
+      const basket: Basket = { basket: [], cardNumber: '' };
+      service.checkout(basket).subscribe((response) => {
+        expect(response).not.toBe(null);
+      });
+      const req = httpMock.expectOne('http://localhost:9001/checkout');
+      expect(req.request.method).toBe('POST');
+    });
   });
 
   describe('#isCreditCardValid()', () => {

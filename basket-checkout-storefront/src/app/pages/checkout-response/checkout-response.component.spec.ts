@@ -16,7 +16,9 @@ describe('CheckoutResponseComponent', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { queryParams: of({ response: 'success' }) },
+          useValue: {
+            queryParams: of({ response: JSON.stringify({ msg: 'success' }) }),
+          },
         },
       ],
       imports: [RouterTestingModule.withRoutes([])],

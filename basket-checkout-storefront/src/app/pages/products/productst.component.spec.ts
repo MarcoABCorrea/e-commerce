@@ -32,4 +32,10 @@ describe('ProductsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call "productService.getAllProducts()" onInit', () => {
+    spyOn(productService, 'getAllProducts').and.callThrough();
+    component.ngOnInit();
+    expect(productService.getAllProducts).toHaveBeenCalled();
+  });
 });
